@@ -3,23 +3,32 @@ import { Button } from "@/components/button"
 import { View, Text, ScrollView, KeyboardAvoidingView, Platform, Alert} from "react-native"
 import { useState } from "react"
 import { Link, router, Router } from "expo-router"
-import { styles } from "./_styles"
+import { styles } from "../../../styles/login.styles"
+import { login } from "@/services/authService"
 
 export default function Login(){
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
 
-    function handleSignIn(){
-        if (!email.trim() || !password.trim()){
-            return Alert.alert("Entrar", "Preencha Email e Senha para entrar.")
-        }
-        if (email.trim() != "teste@gmail.com" || password.trim() != "123456"){
-            return Alert.alert("Entrar", "E-mail e/ou senhas incorretos")
-        }
+    const handleLogIn = async () => {
 
-        Alert.alert("Bem-vindo", `Login com ${email}`)
-        router.replace("/app/home")
+        try{
+            const response = await login(email, password)
+
+            Alert.alert(`Login efetuado com ${response.data.usuario.nome}`)
+        }catch (error: any) {
+            if (error.response) {
+                // erro vindo da API (400, 401, etc)
+                console.log("Erro da API:", error.response.data)
+
+                Alert.alert("Erro", JSON.stringify(error.response.data))
+            } else {
+                // erro de rede
+                console.log("Erro geral:", error)
+                Alert.alert("Erro de conexão")
+            }
+        }
 
     }
 
@@ -46,7 +55,7 @@ export default function Login(){
                             placeholder="Senha"
                             onChangeText={setPassword}
                         />
-                        <Button label="entrar" onPress={handleSignIn}/>
+                        <Button label="entrar" onPress={handleLogIn}/>
                     </View>
 
                     <Text style={styles.footerText}>

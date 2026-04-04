@@ -21,7 +21,7 @@ namespace Projeto.Api.Controllers
             _authService = authService;
         }
 
-        [HttpPost("/auth/login")]
+        [HttpPost("login")]
         [AllowAnonymous] // Login precisa ficar público para emitir o primeiro JWT
         [ProducesResponseType(typeof(ResponseAuthLoginJson), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -39,7 +39,7 @@ namespace Projeto.Api.Controllers
             return StatusCode(response.StatusCode, response.Message);
         }
 
-        [HttpPost("/auth/register")]
+        [HttpPost("register")]
         [AllowAnonymous] // Registro padrão é público e cria usuário profissional
         [ProducesResponseType(typeof(ResponseAuthRegisterJson), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

@@ -2,7 +2,7 @@ import { Input } from "@/components/input"
 import { Button } from "@/components/button"
 import { View, Text, ScrollView, KeyboardAvoidingView, Platform} from "react-native"
 import { Link } from "expo-router"
-import { styles } from "./_styles"
+import { styles } from "../../../styles/signup.styles"
 
 export default function Signup(){
     return (
