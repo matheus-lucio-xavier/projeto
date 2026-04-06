@@ -6,8 +6,9 @@ using Projeto.Domain.Entities;
 
 namespace Projeto.Domain.Interfaces
 {
-    public interface IAuthRepository : IRepository
+    public interface IUserRepository : IRepository
     {
         Task<UserModel?> ConsultarUsuarioPorEmail(string email);
+        Task<UserModel?> ConsultarUsuarioCompleto(Guid id);
     }
 }

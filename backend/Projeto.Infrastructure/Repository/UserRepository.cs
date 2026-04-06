@@ -9,15 +9,25 @@ using Projeto.Infrastructure.Data;
 
 namespace Projeto.Infrastructure.Repository
 {
-    public class AuthRepository : Repository, IAuthRepository
+    public class UserRepository : Repository, IUserRepository
     {
-        public AuthRepository(AppDbContext appDbContext) : base(appDbContext)
+        public UserRepository(AppDbContext appDbContext) : base(appDbContext)
         {
         }
         public async Task<UserModel?> ConsultarUsuarioPorEmail(string email)
         {
             return await _appDbContext.Usuarios
                 .FirstOrDefaultAsync(usuario => usuario.Email == email);
+        }
+
+        public async Task<UserModel?> ConsultarUsuarioCompleto(Guid id)
+        {
+            return await _appDbContext.Usuarios
+            .Include(u => u.Conversas)
+                .ThenInclude(c => c.Conversa)
+            .Include(c => c.Mensagens)
+            .FirstOrDefaultAsync(c => c.Id == id);
+
         }
         
     }

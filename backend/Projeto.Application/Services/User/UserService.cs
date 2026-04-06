@@ -8,10 +8,10 @@ namespace Projeto.Application.Services.User
 {
     public class UserService : IUserService
     {
-        private readonly IRepository _repository;
+        private readonly IUserRepository _repository;
         private readonly IUnitOfWork _unit;
 
-        public UserService(IRepository repository, IUnitOfWork unit)
+        public UserService(IUserRepository repository, IUnitOfWork unit)
         {
             _repository = repository;
             _unit = unit;
@@ -36,6 +36,10 @@ namespace Projeto.Application.Services.User
 
         public async Task<ServiceResponse<ResponseUserJson>> Cadastrar(RequestUserRegisterJson user)
         {
+            var emailExiste = await _repository.ConsultarUsuarioPorEmail(user.Email);
+            if (emailExiste != null)
+                return ServiceResponse<ResponseUserJson>.BadRequest("Email já cadastrado");
+
             // Mapeia DTO para entidade — hash da senha deve ser feito aqui antes de salvar
             var novo = new UserModel
             {
@@ -65,6 +69,10 @@ namespace Projeto.Application.Services.User
             var existente = await _repository.ConsultarPorId<UserModel>(user.Id);
             if (existente is null)
                 return ServiceResponse<ResponseUserJson>.BadRequest("Esse usuario nao existe");
+                
+            var emailExiste = await _repository.ConsultarUsuarioPorEmail(user.Email);
+            if (emailExiste != null)
+                return ServiceResponse<ResponseUserJson>.BadRequest("Email já cadastrado");
 
 
             var novo = new UserModel

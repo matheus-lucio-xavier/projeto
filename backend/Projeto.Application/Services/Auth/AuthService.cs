@@ -12,13 +12,13 @@ namespace Projeto.Application.Services.Auth
 {
     public class AuthService : IAuthService
     {
-        private readonly IAuthRepository _repository;
+        private readonly IUserRepository _repository;
         private readonly TokenService _tokenService;
         private readonly ILogger<AuthService> _logger;
         private readonly IUnitOfWork _unit;
 
         // ILogger injetado para registrar erros sem silenciá-los
-        public AuthService(IAuthRepository repository, TokenService tokenService, ILogger<AuthService> logger, IUnitOfWork unit)
+        public AuthService(IUserRepository repository, TokenService tokenService, ILogger<AuthService> logger, IUnitOfWork unit)
         {
             _repository = repository;
             _tokenService = tokenService;

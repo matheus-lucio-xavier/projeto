@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Projeto.Communication\Projeto.Communication.csproj" />
+  </ItemGroup>
+
 </Project>
