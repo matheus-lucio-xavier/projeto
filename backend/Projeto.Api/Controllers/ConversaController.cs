@@ -108,23 +108,6 @@ namespace Projeto.Api.Controllers
             return StatusCode(response.StatusCode, response.Message);
         }
 
-        [HttpPut("conversas")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> PutConversa([FromBody] RequestConversaRegisterJson conversa)
-        // RequestConversaRegisterJson em vez de conversaModel
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var response = await _service.Editar(conversa);
-            if (response.Success)
-                return StatusCode(response.StatusCode, response.Data);
-
-            return StatusCode(response.StatusCode, response.Message);
-        }
-
         [HttpDelete("conversas/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

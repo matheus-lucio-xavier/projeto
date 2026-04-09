@@ -38,16 +38,6 @@ namespace Projeto.Application.Services.Conversa
 
             return ServiceResponse<ConversaModel>.Ok(conversa);
         }
-
-        public async Task<ServiceResponse<ConversaModel>> ConsultarConversaCompleta(Guid id)
-        {
-            var conversa = await _repository.ConsultarConversaCompleta(id);
-
-            if (conversa is null)
-                return ServiceResponse<ConversaModel>.BadRequest("Essa converca nao existe");
-
-            return ServiceResponse<ConversaModel>.Ok(conversa);
-        }
         public async Task<ServiceResponse<List<ResponseMensagemJson>>> ConsultarMensagens(Guid id)
         {
             var conversa = await _repository.ConsultarPorId<ConversaModel>(id);
@@ -144,33 +134,6 @@ namespace Projeto.Application.Services.Conversa
                 });
             
             return ServiceResponse<ResponseMensagemJson>.Error("Nao foi possivel adcionar membro");
-        }
-        public async Task<ServiceResponse<ResponseConversaJson>> Editar(RequestConversaRegisterJson conversa)
-        {
-            var conversaExiste = await _repository.ConsultarPorId<ConversaModel>(conversa.Id);
-
-            if (conversaExiste is null)
-                return ServiceResponse<ResponseConversaJson>.BadRequest("Essa conversa nao existe");
-
-            var novo = new ConversaModel
-            {
-                Id = conversa.Id,
-                Nome = conversa.Nome,
-                Type = conversa.Type
-            };
-
-            await _repository.Editar(novo);
-            var saved = await _unit.Commit();
-
-            if (saved)
-                return ServiceResponse<ResponseConversaJson>.Ok(new ResponseConversaJson
-                { 
-                    Id = novo.Id,
-                    Type = novo.Type,
-                    Nome = novo.Nome
-                });
-
-            return ServiceResponse<ResponseConversaJson>.Error("Nao foi possivel editar conversa");
         }
         public async Task<ServiceResponse<ResponseConversaJson>> Deletar(Guid id)
         {
