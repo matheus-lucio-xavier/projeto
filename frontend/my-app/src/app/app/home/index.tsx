@@ -1,21 +1,22 @@
-import { getUsers } from "@/services/userService";
-import { useState } from "react";
-import { View, Text, Alert } from "react-native";
+import { getUserConversas, getUsers } from "@/services/userService";
+import { useEffect, useState } from "react";
+import { View, Text, Alert, FlatList, TouchableOpacity } from "react-native";
 import { Button } from "@/components/button";
 import { styles } from "@/styles/home.styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
+import { ConversationList } from "@/components/conversationList";
 
 export default function Home(){
-    const [users, setUsers] = useState(new Array)
 
-    const handleButton = async () => {
+    const [conversas, setConversas] = useState([])
 
+    const fetchData = async () => {
         try{
-            const response = await getUsers()
+            const response = await getUserConversas()
 
-            setUsers(response.data)
             console.log(response.data)
+            setConversas(response.data)
         }catch (error: any) {
             if (error.response) {
                 // erro vindo da API (400, 401, etc)
@@ -50,15 +51,27 @@ export default function Home(){
         }
     }
 
-    return(
-        <View style={styles.container}>
-            <Button label="Logout" onPress={handleLogout}/>
-            <View style={styles.form}>
-                <Button label="Get usuarios" onPress={handleButton}/>
-            </View>
-            {users.map((u) => (
-                <Text key={u.id}>{u.nome}</Text>
-            ))}
+    useEffect(() => {
+        fetchData()
+
+        const interval = setInterval(fetchData, 3000); // atualiza a cada 3s
+
+        return () => clearInterval(interval);
+    }, [])
+
+    const handleConversationList = (id: string, nome: string) =>
+            router.push({
+              pathname: "/app/home/chat/[id]", // ajusta conforme sua estrutura
+              params: { 
+                    id: id,
+                    nome: nome
+                },
+            })
+
+    return (
+        <View style={{ flex: 1 }}>
+            <ConversationList conversas={conversas} onPressChat={handleConversationList}/>
         </View>
-    )
+    );
+
 }

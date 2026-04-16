@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
         flexDirection: "row"
     },
     label: {
-        color: "#F5F5F5",
+        color: "#000000",
         fontSize: 18,
         fontWeight: "600"
     }

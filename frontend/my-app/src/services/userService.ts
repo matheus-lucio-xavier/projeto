@@ -5,3 +5,9 @@ export const getUsers = async () => {
 
   return response;
 };
+
+export const getUserConversas = async () => {
+  const response = await api.get('/User/usuarios/conversas');
+
+  return response;
+};

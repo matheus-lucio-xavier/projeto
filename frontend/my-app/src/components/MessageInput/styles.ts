@@ -1,29 +1,6 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-
-  chatItem: {
-    padding: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: "#eee",
-  },
-
-  chatName: {
-    fontSize: 16,
-  },
-
-  message: {
-    padding: 10,
-    margin: 8,
-    backgroundColor: "#eee",
-    borderRadius: 8,
-    alignSelf: "flex-start",
-  },
-
   inputContainer: {
     flexDirection: "row",
     padding: 10,
