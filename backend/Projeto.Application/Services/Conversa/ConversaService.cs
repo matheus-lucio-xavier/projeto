@@ -52,6 +52,7 @@ namespace Projeto.Application.Services.Conversa
                     Id = m.Id,
                     OrigemId = m.OrigemId,
                     Content = m.Content,
+                    IsMine = userLogadoId == m.OrigemId,
                     CreatedAt = m.CreatedAt
                 }).ToListAsync();
 
@@ -219,6 +220,7 @@ namespace Projeto.Application.Services.Conversa
                     OrigemId = novaMensagem.OrigemId,
                     Type = novaMensagem.Type,
                     Content = novaMensagem.Content,
+                    IsMine = userLogadoId == novaMensagem.OrigemId,
                     CreatedAt = novaMensagem.CreatedAt
                 });
             

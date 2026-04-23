@@ -2,7 +2,7 @@ import { View, Text, FlatList, TextInput, TouchableOpacity, Alert, KeyboardAvoid
 import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { styles } from "@/styles/home.styles";
-import { getConversaMensagens, postConversaMensagens } from "@/services/conversaService";
+import { getConversaMensagens, postConversaMensagem } from "@/services/conversaService";
 import { MessageInput } from "@/components/MessageInput";
 import { MessageList } from "@/components/MessageList";
 
@@ -12,6 +12,7 @@ export default function Chat() {
         origemId: string;
         type: string;
         content: string;
+        isMine: boolean;
         createdAt: string;
     };
 
@@ -23,7 +24,6 @@ export default function Chat() {
         try{
             const response = await getConversaMensagens(id as string)
   
-            console.log(response.data)
             setMensagens(response.data)
         }catch (error: any) {
             if (error.response) {
@@ -43,7 +43,6 @@ export default function Chat() {
         try{
             if (!inputContent.trim()) return;
 
-            console.log("Enviar mensagem:", inputContent);
             setInputContent("");
 
             const mensagem = {
@@ -51,10 +50,7 @@ export default function Chat() {
                 content: inputContent
             }
 
-            const response = await postConversaMensagens(id as string, mensagem)
-  
-            console.log(response.data)
-            setMensagens(response.data)
+            const response = await postConversaMensagem(id as string, mensagem)
         }catch (error: any) {
             if (error.response) {
                 // erro vindo da API (400, 401, etc)

@@ -6,6 +6,7 @@ type Mensagem = {
   origemId: string;
   type: string;
   content: string;
+  isMine: boolean;
   createdAt: string;
 };
 
@@ -15,10 +16,13 @@ type Props = {
 
 export function MessageBubble({ mensagem }: Props) {
   return (
-    <View style={styles.message}>
+    <View style={[styles.message, (mensagem.isMine) ? styles.isMine : styles.isNotMine]}>
         <Text>{mensagem.content}</Text>
-        <Text style={{ fontSize: 10 }}>
-            {new Date(mensagem.createdAt).toLocaleTimeString()}
+        <Text style={styles.dataText}>
+            {new Date(mensagem.createdAt).toLocaleTimeString("pt-br", {
+              hour: "2-digit",
+              minute: "2-digit"
+            })}
         </Text>
     </View>
   );

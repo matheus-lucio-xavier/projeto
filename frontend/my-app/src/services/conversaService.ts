@@ -17,7 +17,7 @@ type requestMensagem = {
     content: string;
 };
 
-export const postConversaMensagens = async (conversaId: string, mensagem: requestMensagem) => {
+export const postConversaMensagem = async (conversaId: string, mensagem: requestMensagem) => {
     const response = await api.post(`/Conversa/conversas/${conversaId}/adcinar-mensagem`, {
         type: mensagem.type,
         content: mensagem.content

@@ -16,7 +16,6 @@ export default function Home(){
         try{
             const response = await getUserConversas()
 
-            console.log(response.data)
             setConversas(response.data)
         }catch (error: any) {
             if (error.response) {

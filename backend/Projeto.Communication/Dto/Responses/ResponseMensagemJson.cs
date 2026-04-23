@@ -12,6 +12,7 @@ namespace Projeto.Communication.Dto.Responses
         public Guid OrigemId { get; set; }
         public MensagemTypeEnum Type { get; set; }
         public required string Content { get; set; }
+        public bool IsMine { get; set; }
         public DateTime CreatedAt { get; set; }
     }
 }

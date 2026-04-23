@@ -18,7 +18,7 @@ namespace Projeto.Infrastructure.Repository
         {
             return _appDbContext.Mensagens
                 .Where(m => m.ConversaId == id)
-                .OrderByDescending(m => m.CreatedAt);
+                .OrderBy(m => m.CreatedAt);
 
         }
 
